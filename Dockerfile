@@ -15,6 +15,8 @@ RUN apt-get update \
   vim \
   pkg-config \
   libmagickcore-dev \
+  && apt-get clean \
+  && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/*
   
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive \
@@ -44,3 +46,6 @@ Run cd && git clone https://github.com/jpuigcerver/Laia.git && cd Laia/egs/spani
   && sed -i 's/wget /wget --no-check-certificate /g' run.sh 
   #&& mkdir -p data/ && wget --no-check-certificate -P data/ https://www.prhlt.upv.es/corpora/spanish-numbers/Spanish_Number_DB.tgz \
   #&& tar -xvzf data/Spanish_Number_DB.tgz -C data
+  
+WORKDIR "/root"
+CMD ["/bin/bash"]
