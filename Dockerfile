@@ -12,7 +12,9 @@ RUN apt-get update \
   autoconf \
   subversion \
   libatlas3-base \
-  vim
+  vim \
+  pkg-config \
+  libmagickcore-dev
   
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive \
   && cd /root/torch \
@@ -34,10 +36,10 @@ RUN luarocks install http://raw.githubusercontent.com/baidu-research/warp-ctc/ma
   && luarocks install lalarm
 
 RUN cd && git clone https://github.com/kaldi-asr/kaldi.git &&  cd kaldi/tools && make -j 4 && cd ../src && ./configure --shared && make depend -j 4 && make -j 4
-
-ENV PATH $PATH:/root/kaldi/src/bin
+RUN cd && git clone https://github.com/mauvilsa/imgtxtenh.git && cd imgtxtenh && mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make -j 4
+ENV PATH $PATH:/root/kaldi/src/bin:/root/imgtxtenh/build
 
 Run cd && git clone https://github.com/jpuigcerver/Laia.git && cd Laia/egs/spanish-numbers \
-  && sed -i 's/wget /wget --no-check-certificate /g' run.sh \
-  && mkdir -p data/ && wget --no-check-certificate -P data/ https://www.prhlt.upv.es/corpora/spanish-numbers/Spanish_Number_DB.tgz \
-  && tar -xvzf data/Spanish_Number_DB.tgz -C data
+  && sed -i 's/wget /wget --no-check-certificate /g' run.sh 
+  #&& mkdir -p data/ && wget --no-check-certificate -P data/ https://www.prhlt.upv.es/corpora/spanish-numbers/Spanish_Number_DB.tgz \
+  #&& tar -xvzf data/Spanish_Number_DB.tgz -C data
