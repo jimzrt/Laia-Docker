@@ -15,6 +15,7 @@ RUN apt-get update \
   vim \
   pkg-config \
   libmagickcore-dev \
+  liblapack-dev \
   && apt-get clean \
   && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/*
