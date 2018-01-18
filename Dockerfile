@@ -14,7 +14,8 @@ RUN apt-get update \
   libatlas3-base \
   vim \
   pkg-config \
-  libmagickcore-dev
+  libmagickcore-dev \
+  && rm -rf /var/lib/apt/lists/*
   
 RUN git clone https://github.com/torch/distro.git /root/torch --recursive \
   && cd /root/torch \
